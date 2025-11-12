@@ -1,5 +1,6 @@
 package com.air.aicodemaster.ai.model;
 
+import dev.langchain4j.model.output.structured.Description;
 import lombok.Data;
 
 /**
@@ -14,10 +15,13 @@ import lombok.Data;
  * 但是这种结构化输出，是通过拼接提示词的方式来实现的，但是 AI 不一定听话，AI 返回 Json 格式之后，需要把 Json 格式转换成 java 对象
  * 有时候 AI 返回的 Json 缺少了或者不完整，或者 AI 没有返回 Json ，框架不能正常解析就抛出异常
  */
+@Description("生成 HTML 代码文件的结果")
 @Data
 public class HtmlCodeResult {
 
+    @Description("HTML代码")
     private String htmlCode;
 
+    @Description("生成代码的描述")
     private String description;
 }

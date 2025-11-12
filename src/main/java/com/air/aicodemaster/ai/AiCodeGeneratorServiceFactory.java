@@ -1,19 +1,30 @@
 package com.air.aicodemaster.ai;
 
 import dev.langchain4j.model.chat.ChatModel;
+import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.service.AiServices;
 import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * AI 服务创建工厂
+ * AI 服务创建工厂类
  */
 @Configuration
 public class AiCodeGeneratorServiceFactory {
 
+    /**
+     * 普通的 ChatModel
+     */
     @Resource
     private ChatModel chatModel;
+
+    /**
+     * 流式的 ChatModel
+     */
+    @Resource
+    private StreamingChatModel streamingChatModel;
+
 
     /**
      * 创建 AI 代码生成器服务
@@ -24,8 +35,12 @@ public class AiCodeGeneratorServiceFactory {
      * 代理模式的作用是，相当于找房子你要租房，自己一个一个跑比较的麻烦，就直接找一个中介，找一个代理，把需求告诉它，中介会帮看好房子，给你返回一些信息
      * 所以代理就是为了，给调用方简化代码，更轻松的实现一些功能
      */
+    // 流式的模式给 AI 服务去使用
     @Bean
     public AiCodeGeneratorService aiCodeGeneratorService() {
-        return AiServices.create(AiCodeGeneratorService.class, chatModel);
+        return AiServices.builder(AiCodeGeneratorService.class) // 为哪个接口生成 AI 服务的代理类
+                .chatModel(chatModel)
+                .streamingChatModel(streamingChatModel)
+                .build();
     }
 }

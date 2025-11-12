@@ -3,6 +3,9 @@ package com.air.aicodemaster.model.enums;
 import cn.hutool.core.util.ObjUtil;
 import lombok.Getter;
 
+/**
+ * 首先定义生成类型枚举，后续其他的 Service 会用到
+ */
 @Getter
 public enum CodeGenTypeEnum {
 
